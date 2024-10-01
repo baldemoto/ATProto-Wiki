@@ -57,6 +57,7 @@
               light
               )
             v-text-field.mt-2(
+              v-if='selectedStrategy.strategy.key !== "atproto"'
               solo
               flat
               prepend-inner-icon='mdi-form-textbox-password'
@@ -358,7 +359,7 @@ export default {
         this.errorMessage = this.$t('auth:invalidEmailUsername')
         this.errorShown = true
         this.$refs.iptEmail.focus()
-      } else if (this.password.length < 2) {
+      } else if (this.password.length < 2 && this.selectedStrategy.strategy.key !== 'atproto') {
         this.errorMessage = this.$t('auth:invalidPassword')
         this.errorShown = true
         this.$refs.iptPassword.focus()
@@ -384,6 +385,7 @@ export default {
                     mustSetupTFA
                     continuationToken
                     redirect
+                    atprotoRedirect
                     tfaQRImage
                   }
                 }
@@ -397,7 +399,9 @@ export default {
           })
           if (_.has(resp, 'data.authentication.login')) {
             const respObj = _.get(resp, 'data.authentication.login', {})
-            if (respObj.responseResult.succeeded === true) {
+            if (respObj.atprotoRedirect) {
+              window.location.replace(respObj.atprotoRedirect)
+            } else if (respObj.responseResult.succeeded === true) {
               this.handleLoginResponse(respObj)
             } else {
               throw new Error(respObj.responseResult.message)

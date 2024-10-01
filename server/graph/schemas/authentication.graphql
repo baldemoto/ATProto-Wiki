@@ -118,6 +118,7 @@ type AuthenticationLoginResponse {
   mustChangePwd: Boolean
   mustProvideTFA: Boolean
   mustSetupTFA: Boolean
+  atprotoRedirect: String
   continuationToken: String
   redirect: String
   tfaQRImage: String

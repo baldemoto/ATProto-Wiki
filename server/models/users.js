@@ -314,6 +314,9 @@ module.exports = class User extends Model {
         }, async (err, user, info) => {
           if (err) { return reject(err) }
           if (!user) { return reject(new WIKI.Error.AuthLoginFailed()) }
+          if (user && 'atprotoRedirect' in user) {
+            return resolve(user)
+          }
 
           try {
             const resp = await WIKI.models.users.afterLoginChecks(user, context, {
@@ -502,7 +505,7 @@ module.exports = class User extends Model {
       if (!usr.isActive) {
         throw new WIKI.Error.AuthAccountBanned()
       }
-      
+
       await WIKI.models.users.query().patch({
         password: newPassword,
         mustChangePwd: false
