@@ -1,0 +1,20 @@
+key: atproto
+title: ATProto
+description: ATProto is a decentralized social media protocol, mainly used by Bluesky.
+author: codingpa.ws
+logo: /_assets/svg/auth-icon-atproto.svg
+color: blue darken-1
+website: https://atproto.com
+isAvailable: true
+useForm: true
+props:
+  privateJWK:
+    type: String
+    title: Private JWK
+    hint: Your private JWK in JSON format.
+    order: 1
+  scope:
+    type: String
+    title: Scope
+    hint: Space-separated scopes. Must include atproto.
+    order: 2

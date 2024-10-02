@@ -162,6 +162,7 @@ module.exports = async () => {
     next()
   })
 
+  app.use('/', ctrl.bsky)
   app.use('/', ctrl.auth)
   app.use('/', ctrl.upload)
   app.use('/', ctrl.common)
