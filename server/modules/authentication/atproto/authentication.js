@@ -4,10 +4,10 @@
 // Auth0 Account
 // ------------------------------------
 
+const request = require('request-promise')
 const CustomStrategy = require('passport-custom').Strategy
 const { JoseKey } = require('@atproto/jwk-jose')
 const ATProto = require('@atproto/oauth-client-node')
-const { Agent } = require('@atproto/api')
 
 const states = new Map()
 const sessions = new Map()
@@ -97,10 +97,15 @@ module.exports = {
 
         console.log('User authenticated as:', session.did)
 
-        const agent = new Agent(session)
+        const url = new URL('https://api.bsky.app/xrpc/app.bsky.actor.getProfile')
+        url.searchParams.set('actor', session.did)
 
-        // Make Authenticated API calls
-        const { data } = await agent.getProfile({ actor: agent.did })
+        const data = await request({
+          method: 'GET',
+          uri: url.href,
+          json: true
+        })
+
         const user = await WIKI.models.users.processProfile({
           providerKey: req.params.strategy,
           profile: {
