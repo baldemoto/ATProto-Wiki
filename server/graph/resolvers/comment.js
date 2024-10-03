@@ -47,11 +47,13 @@ module.exports = {
         })
       if (page) {
         if (WIKI.auth.checkAccess(context.req.user, ['read:comments'], { tags: page.tags, ...args })) {
-          const comments = await WIKI.models.comments.query().where('pageId', page.id).orderBy('createdAt')
+          const comments = await WIKI.models.comments.query().where('pageId', page.id).orderBy('createdAt').withGraphFetched('author')
+          console.log(comments)
           return comments.map(c => ({
             ...c,
             authorName: c.name,
             authorEmail: c.email,
+            authorPicture: c.author?.pictureUrl,
             authorIP: c.ip
           }))
         } else {

@@ -78,8 +78,8 @@
         )
         template(v-slot:icon)
           v-avatar(color='blue-grey')
-            //- v-img(src='http://i.pravatar.cc/64')
-            span.white--text.title {{cm.initials}}
+            v-img(v-if='cm.authorPicture', :src='cm.authorPicture')
+            span.white--text.title(v-else) {{cm.initials}}
         v-card.elevation-1
           v-card-text
             .comments-post-actions(v-if='permissions.manage && !isBusy && commentEditId === 0')
@@ -183,6 +183,7 @@ export default {
                   id
                   render
                   authorName
+                  authorPicture
                   createdAt
                   updatedAt
                 }
