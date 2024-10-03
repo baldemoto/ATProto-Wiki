@@ -25,29 +25,6 @@
               v-list-item-content
                 v-list-item-title {{$t('profile:displayName')}}
                 v-list-item-subtitle {{ user.name }}
-              v-list-item-action
-                v-menu(
-                  v-model='editPop.name'
-                  :close-on-content-click='false'
-                  min-width='350'
-                  left
-                  )
-                  template(v-slot:activator='{ on }')
-                    v-btn(text, color='grey', small, v-on='on', @click='focusField(`iptDisplayName`)')
-                      v-icon(left) mdi-pencil
-                      span {{ $t('common:actions:edit') }}
-                  v-card
-                    v-text-field(
-                      ref='iptDisplayName'
-                      v-model='user.name'
-                      :label='$t(`profile:displayName`)'
-                      solo
-                      hide-details
-                      append-icon='mdi-check'
-                      @click:append='editPop.name = false'
-                      @keydown.enter='editPop.name = false'
-                      @keydown.esc='editPop.name = false'
-                    )
             v-divider
             v-list-item
               v-list-item-avatar(size='32')
