@@ -113,7 +113,7 @@ module.exports = {
             id: data.did,
             displayName: data.handle,
             picture: data.avatar,
-            email: data.did.replace(/:/g, '_') + '@atproto.invalid'
+            email: data.did.replace(/:/g, '_') + '@atproto'
           }
         })
         done(null, user)
